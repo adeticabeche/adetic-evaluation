@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Epreuve 1 - Informatique Générale</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f6f9;
+margin:0;
+}
+
+header{
+background:#0066cc;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+max-width:1000px;
+margin:20px auto;
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+h2{
+color:#0066cc;
+margin-top:25px;
+}
+
+.question{
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin:8px 0;
+font-weight:bold;
+}
+
+input[type="text"],
+textarea{
+width:100%;
+padding:10px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+margin-top:20px;
+padding:12px 25px;
+background:#0066cc;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#004b99;
+}
+.timer{
+position:sticky;
+top:0;
+background:#dc3545;
+color:white;
+text-align:center;
+padding:12px;
+font-size:22px;
+font-weight:bold;
+z-index:999;
+}
+
+
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>ÉPREUVE 1 : INFORMATIQUE GÉNÉRALE (20/20)</h1>
+<div class="timer" id="timer">
+01:00:00
+</div>
+
+</header>
+
+<div class="container">
+
+<form id="epreuve1">
+
+<h2>I. Questions à Choix Multiples (4 points)</h2>
+
+<div class="question">
+<label>1. Pour copier un texte :</label>
+
+<input type="radio" name="copier" value="Ctrl+X" required> Ctrl + X<br>
+<input type="radio" name="copier" value="Ctrl+V"> Ctrl + V<br>
+<input type="radio" name="copier" value="Ctrl+C"> Ctrl + C
+</div>
+
+<div class="question">
+<label>2. Windows est :</label>
+
+<input type="radio" name="windows" value="SE" required>
+Un Système d’Exploitation<br>
+
+<input type="radio" name="windows" value="Serveur">
+Un Serveur Informatique<br>
+
+<input type="radio" name="windows" value="Navigateur">
+Navigateur Web
+</div>
+
+<div class="question">
+<label>3. VGA signifie :</label>
+
+<input type="radio" name="vga" value="Virtual Graphic Array" required>
+Virtual Graphic Array<br>
+
+<input type="radio" name="vga" value="Visual Graphic Audio">
+Visual Graphic Audio<br>
+
+<input type="radio" name="vga" value="Video Graphic Aux">
+Video Graphic Aux
+</div>
+
+<div class="question">
+<label>4. Word est :</label>
+
+<input type="radio" name="word" value="Editeur" required>
+Editeur de texte<br>
+
+<input type="radio" name="word" value="Traitement">
+Traitement de texte<br>
+
+<input type="radio" name="word" value="Langage">
+Langage de programmation
+</div>
+
+<h2>II. Raccourcis clavier (10 points)</h2>
+
+<label>Enregistrer :</label>
+<input type="text" id="enregistrer" required>
+
+<label>Imprimer :</label>
+<input type="text" id="imprimer" required>
+
+<label>Nouvelle fenêtre :</label>
+<input type="text" id="nouvelleFenetre" required>
+
+<label>Copier :</label>
+<input type="text" id="copierTxt" required>
+
+<label>Couper :</label>
+<input type="text" id="couper" required>
+
+<label>Coller :</label>
+<input type="text" id="coller" required>
+
+<label>Changer la langue :</label>
+<input type="text" id="langue" required>
+
+<label>Justifier les textes :</label>
+<input type="text" id="justifier" required>
+
+<label>Sélectionner le fichier :</label>
+<input type="text" id="selectionner" required>
+
+<label>Fermer Windows :</label>
+<input type="text" id="fermer" required>
+
+<h2>III. Qu'appelle-t-on la flèche qui circule sur l'écran ?</h2>
+
+<textarea id="fleche" rows="3" required></textarea>
+
+<h2>IV. Que signifie PC ?</h2>
+
+<textarea id="pc" rows="3" required></textarea>
+
+<h2>V. Expliquer les touches suivantes</h2>
+
+<label>Ctrl :</label>
+<textarea id="ctrl" rows="2"></textarea>
+
+<label>Shift :</label>
+<textarea id="shift" rows="2"></textarea>
+
+<label>Delete :</label>
+<textarea id="delete" rows="2"></textarea>
+
+<label>Enter :</label>
+<textarea id="enter" rows="2"></textarea>
+
+<label>Alt :</label>
+<textarea id="alt" rows="2"></textarea>
+
+<label>Esc :</label>
+<textarea id="esc" rows="2"></textarea>
+
+<label>End :</label>
+<textarea id="end" rows="2"></textarea>
+
+<label>CapsLock :</label>
+<textarea id="capslock" rows="2"></textarea>
+
+<button type="submit">
+Passer à l'épreuve Word
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+document.getElementById("epreuve1")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+localStorage.setItem("epreuve1",
+JSON.stringify({
+
+copier:
+document.querySelector('input[name="copier"]:checked').value,
+
+windows:
+document.querySelector('input[name="windows"]:checked').value,
+
+vga:
+document.querySelector('input[name="vga"]:checked').value,
+
+word:
+document.querySelector('input[name="word"]:checked').value,
+
+enregistrer:
+document.getElementById("enregistrer").value,
+
+imprimer:
+document.getElementById("imprimer").value,
+
+nouvelleFenetre:
+document.getElementById("nouvelleFenetre").value,
+
+copierTxt:
+document.getElementById("copierTxt").value,
+
+couper:
+document.getElementById("couper").value,
+
+coller:
+document.getElementById("coller").value,
+
+langue:
+document.getElementById("langue").value,
+
+justifier:
+document.getElementById("justifier").value,
+
+selectionner:
+document.getElementById("selectionner").value,
+
+fermer:
+document.getElementById("fermer").value,
+
+fleche:
+document.getElementById("fleche").value,
+
+pc:
+document.getElementById("pc").value,
+
+ctrl:
+document.getElementById("ctrl").value,
+
+shift:
+document.getElementById("shift").value,
+
+delete:
+document.getElementById("delete").value,
+
+enter:
+document.getElementById("enter").value,
+
+alt:
+document.getElementById("alt").value,
+
+esc:
+document.getElementById("esc").value,
+
+end:
+document.getElementById("end").value,
+
+capslock:
+document.getElementById("capslock").value
+
+}));
+
+window.location.href="epreuve2.html";
+
+});
+
+</script>
+
+<script>
+
+let temps = parseInt(localStorage.getItem("tempsRestant")) || 3600;
+
+function chrono(){
+
+let h=Math.floor(temps/3600);
+let m=Math.floor((temps%3600)/60);
+let s=temps%60;
+
+document.getElementById("timer").innerHTML=
+"⏰ Temps restant : " +
+String(h).padStart(2,'0') + ":" +
+String(m).padStart(2,'0') + ":" +
+String(s).padStart(2,'0');
+
+localStorage.setItem("tempsRestant",temps);
+
+if(temps>0){
+temps--;
+}else{
+alert("Le temps est terminé.");
+window.location.href="resultat.html";
+}
+
+}
+
+setInterval(chrono,1000);
+
+</script>
+
+</body>
+</html>

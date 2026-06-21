@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Épreuve Word</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+}
+
+header{
+    background:#0066cc;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.timer{
+    position:sticky;
+    top:0;
+    background:#dc3545;
+    color:white;
+    padding:12px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    z-index:999;
+}
+
+.container{
+    max-width:1000px;
+    margin:20px auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+h2{
+    color:#0066cc;
+    margin-top:25px;
+}
+
+label{
+    display:block;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    margin-top:5px;
+    margin-bottom:15px;
+    resize:vertical;
+}
+
+button{
+    padding:12px 25px;
+    background:#0066cc;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#004c99;
+}
+
+.image-word{
+    width:100%;
+    max-width:800px;
+    display:block;
+    margin:auto;
+    border:1px solid #ddd;
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>ÉPREUVE WORD (20/20)</h1>
+</header>
+
+<div class="timer" id="timer">
+00:00:00
+</div>
+
+<div class="container">
+
+<form id="epreuve2">
+
+<h2>1. Expliquer les différentes parties indiquées par la flèche (2,5 pts)</h2>
+
+<img src="../images/windows.png" class="image-word" alt="Interface Windows">
+
+<textarea id="partiesWord" rows="6" required></textarea>
+
+<h2>2. Comment corriger les fautes orthographiques et grammaticales ? (1 pt)</h2>
+
+<textarea id="correction" rows="5" required></textarea>
+
+<h2>3. Expliquer comment insérer un tableau (1 pt)</h2>
+
+<textarea id="tableau" rows="5" required></textarea>
+
+<h2>4. Citer les trois formats de page (3 pts)</h2>
+
+<textarea id="formats" rows="4" required></textarea>
+
+<h2>5. Expliquer comment faire : (5 pts)</h2>
+
+<label>La marge :</label>
+<textarea id="marge" rows="3"></textarea>
+
+<label>Orientation :</label>
+<textarea id="orientation" rows="3"></textarea>
+
+<label>Colonnes :</label>
+<textarea id="colonnes" rows="3"></textarea>
+
+<label>Filigrane :</label>
+<textarea id="filigrane" rows="3"></textarea>
+
+<label>Couleur de page :</label>
+<textarea id="couleurPage" rows="3"></textarea>
+
+<h2>6. Expliquer les différentes parties de la fenêtre d'impression (8 pts)</h2>
+
+<img src="../images/impression.png" class="image-word" alt="Fenêtre Impression">
+
+<textarea id="impression" rows="8" required></textarea>
+
+
+<button type="submit">
+Passer à l'épreuve Excel
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+/* CHRONOMÈTRE */
+
+let temps = parseInt(localStorage.getItem("tempsRestant")) || 3600;
+
+function chrono(){
+
+let h = Math.floor(temps / 3600);
+let m = Math.floor((temps % 3600) / 60);
+let s = temps % 60;
+
+document.getElementById("timer").innerHTML =
+"⏰ Temps restant : " +
+String(h).padStart(2,"0") + ":" +
+String(m).padStart(2,"0") + ":" +
+String(s).padStart(2,"0");
+
+localStorage.setItem("tempsRestant", temps);
+
+if(temps > 0){
+    temps--;
+}else{
+    alert("Temps écoulé !");
+    window.location.href = "resultat.html";
+}
+
+}
+
+setInterval(chrono,1000);
+
+/* SAUVEGARDE ÉPREUVE WORD */
+
+document.getElementById("epreuve2")
+.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+localStorage.setItem("epreuve2", JSON.stringify({
+
+partiesWord: document.getElementById("partiesWord").value,
+correction: document.getElementById("correction").value,
+tableau: document.getElementById("tableau").value,
+formats: document.getElementById("formats").value,
+marge: document.getElementById("marge").value,
+orientation: document.getElementById("orientation").value,
+colonnes: document.getElementById("colonnes").value,
+filigrane: document.getElementById("filigrane").value,
+couleurPage: document.getElementById("couleurPage").value,
+impression: document.getElementById("impression").value,
+satisfaction: document.getElementById("satisfaction").value
+
+}));
+
+window.location.href = "epreuve3.html";
+
+});
+
+</script>
+
+</body>
+</html>

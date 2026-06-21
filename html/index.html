@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Evaluation en Ligne ADETIC</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f6f9;
+}
+
+header{
+background:#0066cc;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+max-width:800px;
+margin:30px auto;
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+h2{
+margin-bottom:15px;
+color:#0066cc;
+}
+
+p{
+margin-bottom:10px;
+}
+
+.timer{
+background:#dc3545;
+color:white;
+padding:10px;
+font-size:20px;
+font-weight:bold;
+text-align:center;
+border-radius:5px;
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+margin-top:20px;
+width:100%;
+padding:12px;
+background:#0066cc;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#004c99;
+}
+
+.logo{
+    width:180px;
+    height:auto;
+    display:block;
+    margin:auto;
+    margin-bottom:15px;
+    background:white;
+    padding:8px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+.sous-titre{
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    margin-top:10px;
+}
+h1{
+    text-align:center;
+    margin-top:10px;
+    font-size:32px;
+}
+
+.sous-titre{
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>EVALUATION EN LIGNE ADETIC ABECHE</h1>
+<p>Durée totale : 1 Heure</p>
+</header>
+
+<img src="../images/adeticlogo.webp" class="logo" alt="Logo ADETIC">
+
+<h1>ADETIC D'ABECHE</h1>
+<p class="sous-titre">
+Agence de Développement des Technologies de l'Information
+et de la Communication - ADETIC Abéché
+</p>
+
+
+
+<div class="container">
+
+<div class="timer" id="timer">
+01:00:00
+</div>
+
+<h2>Informations sur l'apprenant</h2>
+
+<p>
+Veuillez remplir correctement les informations demandées avant de commencer l'épreuve.
+</p>
+
+<form id="formCandidat">
+
+<label>Nom *</label>
+<input type="text" id="nom" required>
+
+<label>Prénoms *</label>
+<input type="text" id="prenoms" required>
+
+<label>Numéro téléphone *</label>
+<input type="tel" id="telephone" required>
+
+<label>Adresse e-mail *</label>
+<input type="email" id="email" required>
+
+<button type="submit">
+Commencer l'épreuve
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+let temps = localStorage.getItem("tempsRestant")
+? parseInt(localStorage.getItem("tempsRestant"))
+: 3600;
+
+function chrono(){
+localStorage.setItem("tempsRestant", temps);
+let h=Math.floor(temps/3600);
+let m=Math.floor((temps%3600)/60);
+let s=temps%60;
+
+document.getElementById("timer").innerHTML=
+String(h).padStart(2,'0')+":"+
+String(m).padStart(2,'0')+":"+
+String(s).padStart(2,'0');
+
+if(temps>0){
+temps--;
+}
+
+}
+
+setInterval(chrono,1000);
+
+document.getElementById("formCandidat")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+localStorage.setItem("nom",
+document.getElementById("nom").value);
+
+localStorage.setItem("prenoms",
+document.getElementById("prenoms").value);
+
+localStorage.setItem("telephone",
+document.getElementById("telephone").value);
+
+localStorage.setItem("email",
+document.getElementById("email").value);
+
+window.location.href="epreuve1.html";
+
+});
+
+</script>
+
+</body>
+</html>

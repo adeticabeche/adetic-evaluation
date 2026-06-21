@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Épreuve Excel</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+}
+
+header{
+    background:#28a745;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.timer{
+    position:sticky;
+    top:0;
+    background:#dc3545;
+    color:white;
+    text-align:center;
+    padding:12px;
+    font-size:22px;
+    font-weight:bold;
+    z-index:999;
+}
+
+.container{
+    max-width:1000px;
+    margin:20px auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+
+h2{
+    color:#28a745;
+    margin-top:25px;
+}
+
+label{
+    display:block;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    margin-top:5px;
+    margin-bottom:15px;
+    resize:vertical;
+}
+
+button{
+    background:#28a745;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#1f7a34;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>ÉPREUVE EXCEL (20/20)</h1>
+</header>
+
+<div class="timer" id="timer">
+00:00:00
+</div>
+
+<div class="container">
+
+<form id="epreuve3">
+
+<h2>I. Définir les termes suivants</h2>
+
+<label>Excel :</label>
+<textarea id="excel" rows="3" required></textarea>
+
+<label>Classeur :</label>
+<textarea id="classeur" rows="3" required></textarea>
+
+<label>Feuille de calcul :</label>
+<textarea id="feuille" rows="3" required></textarea>
+
+<label>Cellule :</label>
+<textarea id="cellule" rows="3" required></textarea>
+
+<label>Barre de formule :</label>
+<textarea id="barreFormule" rows="3" required></textarea>
+
+<h2>II. Expliquer ces écritures</h2>
+
+<label>G15 :</label>
+<textarea id="g15" rows="2" required></textarea>
+
+<label>F5 :</label>
+<textarea id="f5" rows="2" required></textarea>
+
+<label>A5 :</label>
+<textarea id="a5" rows="2" required></textarea>
+
+<label>A$5$5 :</label>
+<textarea id="a55" rows="2" required></textarea>
+
+<h2>III. Expliquer les syntaxes suivantes</h2>
+
+<label>RANG(nombre;référence;ordre) :</label>
+<textarea id="rang" rows="4" required></textarea>
+
+<label>SI(test_logique;valeur_si_vrai;valeur_si_faux) :</label>
+<textarea id="si" rows="4" required></textarea>
+
+<h2>IV. Création d'un graphique Histogramme 3D groupé</h2>
+
+<textarea id="graphique" rows="6" required></textarea>
+
+<h2>V. Comment faire disparaître et réapparaître :</h2>
+
+<label>Barre de titre :</label>
+<textarea id="barreTitre" rows="3" required></textarea>
+
+<label>Barre de formule :</label>
+<textarea id="barreFormule2" rows="3" required></textarea>
+
+<label>Quadrillage :</label>
+<textarea id="quadrillage" rows="3" required></textarea>
+
+<label>Règle :</label>
+<textarea id="regle" rows="3" required></textarea>
+
+<br>
+<h2>7. Êtes-vous satisfaits de la formation ? Si Oui Pourquoi ? (1 pt)</h2>
+
+<textarea id="satisfaction" rows="5" required></textarea>
+<button type="submit" id="btnEnvoyer">
+Envoyer l'évaluation
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+/* CHRONOMETRE */
+
+let temps = parseInt(localStorage.getItem("tempsRestant")) || 3600;
+
+function chrono(){
+
+let h=Math.floor(temps/3600);
+let m=Math.floor((temps%3600)/60);
+let s=temps%60;
+
+document.getElementById("timer").innerHTML=
+"⏰ Temps restant : " +
+String(h).padStart(2,'0') + ":" +
+String(m).padStart(2,'0') + ":" +
+String(s).padStart(2,'0');
+
+localStorage.setItem("tempsRestant",temps);
+
+if(temps>0){
+temps--;
+}else{
+alert("Temps écoulé !");
+}
+
+}
+
+setInterval(chrono,1000);
+
+/* SAUVEGARDE */
+
+document.getElementById("epreuve3")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+localStorage.setItem("epreuve3",
+
+JSON.stringify({
+
+excel:document.getElementById("excel").value,
+classeur:document.getElementById("classeur").value,
+feuille:document.getElementById("feuille").value,
+cellule:document.getElementById("cellule").value,
+barreFormule:document.getElementById("barreFormule").value,
+
+g15:document.getElementById("g15").value,
+f5:document.getElementById("f5").value,
+a5:document.getElementById("a5").value,
+a55:document.getElementById("a55").value,
+
+rang:document.getElementById("rang").value,
+si:document.getElementById("si").value,
+
+graphique:document.getElementById("graphique").value,
+
+barreTitre:document.getElementById("barreTitre").value,
+barreFormule2:document.getElementById("barreFormule2").value,
+quadrillage:document.getElementById("quadrillage").value,
+regle:document.getElementById("regle").value
+
+})
+
+);
+
+google.script.run
+.withSuccessHandler(function(){
+
+alert("Évaluation envoyée avec succès.");
+
+localStorage.clear();
+
+window.location.href="resultat.html";
+
+})
+.saveEvaluation(data);
+
+});
+
+</script>
+
+</body>
+</html>

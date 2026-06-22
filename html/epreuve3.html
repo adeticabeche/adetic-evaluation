@@ -237,13 +237,13 @@ setInterval(chrono,1000);
 /* SAUVEGARDE */
 
 document.getElementById("epreuve3")
-.addEventListener("submit",function(e){
+.addEventListener("submit", function(e){
 
 e.preventDefault();
 
-localStorage.setItem("epreuve3",
+/* Sauvegarde épreuve 3 */
 
-JSON.stringify({
+const epreuve3 = {
 
 excel:document.getElementById("excel").value,
 classeur:document.getElementById("classeur").value,
@@ -264,11 +264,46 @@ graphique:document.getElementById("graphique").value,
 barreTitre:document.getElementById("barreTitre").value,
 barreFormule2:document.getElementById("barreFormule2").value,
 quadrillage:document.getElementById("quadrillage").value,
-regle:document.getElementById("regle").value
+regle:document.getElementById("regle").value,
 
-})
+satisfaction:document.getElementById("satisfaction").value
 
+};
+
+localStorage.setItem(
+"epreuve3",
+JSON.stringify(epreuve3)
 );
+
+/* Récupération de toutes les données */
+
+const epreuve1 =
+JSON.parse(localStorage.getItem("epreuve1")) || {};
+
+const epreuve2 =
+JSON.parse(localStorage.getItem("epreuve2")) || {};
+
+const infos = {
+
+nom:localStorage.getItem("nom") || "",
+prenoms:localStorage.getItem("prenoms") || "",
+telephone:localStorage.getItem("telephone") || "",
+email:localStorage.getItem("email") || ""
+
+};
+
+/* Fusion de toutes les données */
+
+const data = {
+
+...infos,
+...epreuve1,
+...epreuve2,
+...epreuve3
+
+};
+
+/* Envoi vers Google Sheets */
 
 google.script.run
 .withSuccessHandler(function(){
@@ -278,6 +313,11 @@ alert("Évaluation envoyée avec succès.");
 localStorage.clear();
 
 window.location.href="resultat.html";
+
+})
+.withFailureHandler(function(error){
+
+alert("Erreur d'envoi : " + error.message);
 
 })
 .saveEvaluation(data);
